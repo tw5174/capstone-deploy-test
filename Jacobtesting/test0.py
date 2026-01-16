@@ -11,7 +11,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to("cpu")  # Use "cpu" if no GPU or "cuda" if nvidia gpu
 
 # ---- 2. Load your image ----
-image_path = "images_before/peanuts4.jpeg"
+image_path = "images_before/peanuts3.jpeg"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 

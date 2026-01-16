@@ -1,0 +1,11 @@
+Camera image
+   ↓
+Peanut segmentation (already done)
+   ↓
+Convert RGB → LAB
+   ↓
+Extract color statistics
+   ↓
+ML model (Random Forest / XGBoost)
+   ↓
+Harvest timing prediction
