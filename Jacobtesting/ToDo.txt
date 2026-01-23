@@ -1,10 +1,10 @@
 Camera image
    ↓
-Peanut segmentation (already done)
+Peanut segmentation (done)
    ↓
-Convert RGB → LAB
+Convert RGB → LAB (done)
    ↓
-Extract color statistics
+Extract color statistics (done (mean and std))
    ↓
 ML model (Random Forest / XGBoost)
    ↓
