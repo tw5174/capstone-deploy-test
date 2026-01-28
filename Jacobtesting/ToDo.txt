@@ -9,3 +9,7 @@ Extract color statistics (done (mean and std))
 ML model (Random Forest / XGBoost)
    ↓
 Harvest timing prediction
+
+
+For lab computer
+ py -3.12 -m pip install

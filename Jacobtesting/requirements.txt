@@ -1,0 +1,17 @@
+# Core ML
+torch
+torchvision
+
+# Meta Segment Anything
+git+https://github.com/facebookresearch/segment-anything.git
+
+# Computer vision
+opencv-python
+pycocotools
+
+# ONNX
+onnx
+onnxruntime
+
+# Plotting
+matplotlib
