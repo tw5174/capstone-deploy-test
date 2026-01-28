@@ -102,12 +102,15 @@ B_vals = B[overlay > 0]
 # ----- 8. Extract Color Statistics
 mean_L1 = np.mean(L_vals)
 std_L1 = np.std(L_vals)
+median_L1 = np.median(L_vals)
 
 mean_A1 = np.mean(A_vals)
 std_A1  = np.std(A_vals)
+median_A1 = np.median(A_vals)
 
 mean_B1 = np.mean(B_vals)
 std_B1  = np.std(B_vals)
+median_B1 = np.median(B_vals)
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
@@ -192,12 +195,15 @@ B_vals = B[overlay > 0]
 # ----- 8. Extract Color Statistics
 mean_L2 = np.mean(L_vals)
 std_L2 = np.std(L_vals)
+median_L2 = np.median(L_vals)
 
 mean_A2 = np.mean(A_vals)
 std_A2  = np.std(A_vals)
+median_A2 = np.median(A_vals)
 
 mean_B2 = np.mean(B_vals)
 std_B2  = np.std(B_vals)
+median_B2 = np.median(B_vals)
 
 #--------------------------------------------------------------------------------------------------------------------
 
@@ -282,12 +288,15 @@ B_vals = B[overlay > 0]
 # ----- 8. Extract Color Statistics
 mean_L3 = np.mean(L_vals)
 std_L3 = np.std(L_vals)
+median_L3 = np.median(L_vals)
 
 mean_A3 = np.mean(A_vals)
 std_A3  = np.std(A_vals)
+median_A3 = np.median(A_vals)
 
 mean_B3 = np.mean(B_vals)
 std_B3  = np.std(B_vals)
+median_B3 = np.median(B_vals)
 
 #----------------------------------------------------------------------------------------------------------------
 
@@ -322,12 +331,20 @@ std_vals = np.array([
     [std_L3, std_A3, std_B3]
 ])
 
+median_vals = np.array([
+    [median_L1, median_A1, median_B1],
+    [median_L2, median_A2, median_B2],
+    [median_L3, median_A3, median_B3]
+])
+
 x = np.arange(len(channels))
-width = 0.13  # width of each bar
+width = 0.08  # width of each bar
 
 for i in range(3):  # for each run
-    plt.bar(x - width*2 + i*width, mean_vals[i], width, label=f'{groups[i]} Mean')
-    plt.bar(x - width*2 + i*width + width*0.5, std_vals[i], width, label=f'{groups[i]} Std')
+    offset = (i - 1) * 3 * width
+    plt.bar(x + offset - width, mean_vals[i], width,label=f'{groups[i]} Mean')
+    plt.bar(x + offset, std_vals[i], width,label=f'{groups[i]} Std')
+    plt.bar(x + offset + width, median_vals[i], width,label=f'{groups[i]} Median')
 
 plt.xticks(x, channels)
 plt.ylabel('Value')

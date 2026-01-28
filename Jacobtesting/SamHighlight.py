@@ -11,7 +11,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to("cpu")  # Use "cpu" if no GPU or "cuda" if nvidia gpu
 
 # ---- 2. Load your image ----
-image_path = "images_before/peanuts1.jpeg"
+image_path = "images_before/peanuts3.jpeg"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -58,75 +58,15 @@ for mask in masks:
         overlay = np.maximum(overlay, mask['segmentation'].astype(np.uint8) * 255)
 
 # ---- 5. Display the result ----
-#plt.figure(figsize=(10, 10))
-#plt.imshow(image)
-#plt.imshow(overlay, alpha=0.5, cmap='Reds')  # Highlights all detected objects
-#plt.axis('off')
-#plt.show()
+plt.figure(figsize=(10, 10))
+plt.imshow(image)
+plt.imshow(overlay, alpha=0.5, cmap='Reds')  # Highlights all detected objects
+plt.axis('off')
+plt.show()
 
 # ---- 6. Optional: Save overlay image ----
-#output_path = "peanuts_highlighted.png"
-#highlighted = image.copy()
-#highlighted[overlay > 0] = [255, 0, 0]  # Highlight in red
-#cv2.imwrite(output_path, cv2.cvtColor(highlighted, cv2.COLOR_RGB2BGR))
-#print(f"Highlighted image saved to {output_path}")
-
-
-
-# ----- 7. Turn RGB values into LAB values
-#lab = cv2.cvtColor(image_path, cv2.COLOR_RGB2LAB)
-L, A, B = cv2.split(image)
-
-L_vals = L[overlay > 0]
-A_vals = A[overlay > 0]
-B_vals = B[overlay > 0]
-
-# plt.imshow(L * (overlay > 0), cmap="gray")
-# plt.colorbar()
-# plt.title("LAB L channel (masked)")
-# plt.axis("off")
-# plt.show()
-
-# plt.imshow(A * (overlay > 0), cmap="gray")
-# plt.colorbar()
-# plt.title("LAB A channel (masked)")
-# plt.axis("off")
-# plt.show()
-
-# plt.imshow(B * (overlay > 0), cmap="gray")
-# plt.colorbar()
-# plt.title("LAB B channel (masked)")
-# plt.axis("off")
-# plt.show()
-
-# ----- 8. Extract Color Statistics
-mean_L = np.mean(L_vals)
-std_L = np.std(L_vals)
-median_L = np.median(L_vals)
-
-mean_A = np.mean(A_vals)
-std_A  = np.std(A_vals)
-median_A = np.median(A_vals)
-
-mean_B = np.mean(B_vals)
-std_B  = np.std(B_vals)
-median_B = np.median(B_vals)
-
-channels = ['L', 'A', 'B']
-mean_vals = [mean_L, mean_A, mean_B]
-std_vals = [std_L, std_A, std_B]
-median_vals = [median_L, median_A, median_B]
-
-x = np.arange(len(channels))
-
-width = 0.25
-
-plt.bar(x - width, mean_vals, width, label='Mean')
-plt.bar(x, std_vals, width, label='Std')
-plt.bar(x + width, median_vals, width, label='Median')
-plt.xticks(x, channels)
-plt.ylabel('Value')
-plt.title('LAB Channel Statistics')
-plt.ylim(0, 150)  # fixed y-axis
-plt.legend()
-plt.show()
+output_path = "images_after/peanuts3_sample.png"
+highlighted = image.copy()
+highlighted[overlay > 0] = [255, 0, 0]  # Highlight in red
+cv2.imwrite(output_path, cv2.cvtColor(highlighted, cv2.COLOR_RGB2BGR))
+print(f"Highlighted image saved to {output_path}")

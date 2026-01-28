@@ -4,12 +4,39 @@ Peanut segmentation (done)
    ↓
 Convert RGB → LAB (done)
    ↓
-Extract color statistics (done (mean and std))
+Extract color statistics (done (mean, std, and median))
    ↓
 ML model (Random Forest / XGBoost)
+      ⮑ Place good images into folder
+      ⮑ Put extracted data into a np array to be saved post run
+      ⮑ Use np.load() to bring back saved data
+      ⮑ Define random forest (See below)
+      ⮑ Compare CV performance
    ↓
 Harvest timing prediction
 
 
 For lab computer
  py -3.12 -m pip install
+
+
+Define random forest pseudocode
+ rf = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=4,
+    min_samples_leaf=2,
+    max_features="sqrt",
+    random_state=42
+)
+
+
+Cross validate with LOO pseudocode
+   loo = LeaveOneOut()
+
+   scores = cross_val_score(
+      rf,
+      X,
+      y,
+      cv=loo,
+      scoring="accuracy"
+   )
