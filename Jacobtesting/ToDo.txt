@@ -8,8 +8,8 @@ Extract color statistics (done (mean, std, and median))
    ↓
 ML model (Random Forest / XGBoost)
       ⮑ Place good images into folder (done)
-      ⮑ Put extracted data into a np array to be saved post run
-      ⮑ Use np.load() to bring back saved data
+      ⮑ Put extracted data into a np array to be saved post run (done)
+      ⮑ Use np.load() to bring back saved data 
       ⮑ Define random forest (See below)
       ⮑ Compare CV performance
    ↓
