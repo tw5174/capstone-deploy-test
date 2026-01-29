@@ -11,7 +11,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to("cpu")  # Use "cpu" if no GPU or "cuda" if nvidia gpu
 
 # ---- 2. Load your image ----
-image_path = "images_before/peanuts3.jpeg"
+image_path = "data/28/test3.png"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -19,7 +19,7 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 # mask_generator = SamAutomaticMaskGenerator(sam)
 mask_generator = SamAutomaticMaskGenerator(
     model=sam,
-    points_per_side=32,           # default grid resolution (higher → more detailed)
+    points_per_side=64,           # default grid resolution (higher → more detailed)
     pred_iou_thresh=0.88,         # default confidence threshold for masks
     stability_score_thresh=0.95,  # default stability filter (lower → more masks)
     points_per_batch=64           # batch size for processing points
@@ -65,8 +65,8 @@ plt.axis('off')
 plt.show()
 
 # ---- 6. Optional: Save overlay image ----
-output_path = "images_after/peanuts3_sample.png"
-highlighted = image.copy()
-highlighted[overlay > 0] = [255, 0, 0]  # Highlight in red
-cv2.imwrite(output_path, cv2.cvtColor(highlighted, cv2.COLOR_RGB2BGR))
-print(f"Highlighted image saved to {output_path}")
+# output_path = "images_after/peanuts3_sample.png"
+# highlighted = image.copy()
+# highlighted[overlay > 0] = [255, 0, 0]  # Highlight in red
+# cv2.imwrite(output_path, cv2.cvtColor(highlighted, cv2.COLOR_RGB2BGR))
+# print(f"Highlighted image saved to {output_path}")

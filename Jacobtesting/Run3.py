@@ -11,7 +11,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to("cpu")  # Use "cpu" if no GPU or "cuda" if nvidia gpu
 
 # ---- 2. Load your image ----
-image_path = "images_before/peanuts1.jpeg"
+image_path = "data/28/test3.png"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -114,7 +114,7 @@ median_B1 = np.median(B_vals)
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
-image_path = "images_before/peanuts2.jpeg"
+image_path = "data/14/test2.png"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 masks = mask_generator.generate(image)
@@ -207,7 +207,7 @@ median_B2 = np.median(B_vals)
 
 #--------------------------------------------------------------------------------------------------------------------
 
-image_path = "images_before/peanuts3.jpeg"
+image_path = "data/0/test1.png"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 masks = mask_generator.generate(image)
