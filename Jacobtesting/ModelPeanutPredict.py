@@ -1,9 +1,12 @@
 from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
 import cv2
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
-import os
-
+#import os
+from sklearn.ensemble import RandomForestRegressor
+# from sklearn.model_selection import LeaveOneOut, cross_val_score
+# from sklearn.model_selection import cross_val_predict
+import joblib
 
 
 # ---- 1. Load the SAM model ----
@@ -12,46 +15,26 @@ model_type = "vit_h"
 sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to("cpu")  # Use "cpu" if no GPU or "cuda" if nvidia gpu
 
+# ---- 2. Load your image ----
+# image_path = "images_before/peanuts1.jpeg"
+# image = cv2.imread(image_path)
+# image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+# ---- 3. Generate automatic masks ----
+# mask_generator = SamAutomaticMaskGenerator(sam)
 mask_generator = SamAutomaticMaskGenerator(
-        model=sam,
-        points_per_side=32,           # default grid resolution (higher → more detailed)
-        pred_iou_thresh=0.88,         # default confidence threshold for masks
-        stability_score_thresh=0.95,  # default stability filter (lower → more masks)
-        points_per_batch=64           # batch size for processing points
-    )
+    model=sam,
+    points_per_side=32,           # default grid resolution (higher → more detailed)
+    pred_iou_thresh=0.88,         # default confidence threshold for masks
+    stability_score_thresh=0.95,  # default stability filter (lower → more masks)
+    points_per_batch=64           # batch size for processing points
+)
 
 def extract_lab_features(image_path):
 
-    #image_path = "images_before/peanuts1.jpeg"
     image = cv2.imread(image_path)
-    # if image is None:
-    #     print("Failed to read:", path)
-    # else:
-    #     print("this is what it sees: ", path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
     masks = mask_generator.generate(image)
-
-# def extract_lab_features(image_path):
-#     img = cv2.imread(image_path)
-
-#     if img is None:
-#         raise ValueError(f"Could not load {image_path}")
-
-#     # Convert BGR → LAB
-#     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
-
-#     features = []
-#     for i in range(3):  # L, A, B
-#         channel = lab[:, :, i]
-#         features.extend([
-#             channel.mean(),
-#             np.median(channel),
-#             channel.std()
-#         ])
-
-#     return np.array(features)
-
 
 # ---- 4. Combine masks into a single overlay ----
 # Set your size thresholds in pixels
@@ -88,20 +71,6 @@ def extract_lab_features(image_path):
     lab = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
     L, A, B = cv2.split(image)
 
-    # L_vals = L[overlay > 0]
-    # A_vals = A[overlay > 0]
-    # B_vals = B[overlay > 0]
-
-
-    # features = []
-    # for i in range(3):  # L, A, B
-    #     channel = lab[:, :, i]
-    #     features.extend([
-    #         channel.mean(),
-    #         np.median(channel),
-    #         channel.std()
-    #     ])
-    
     A_vals = A[overlay > 0]
     B_vals = B[overlay > 0]
 
@@ -116,36 +85,12 @@ def extract_lab_features(image_path):
 
     return np.array(features)
 
-X = []  #2d array, thus capital
-y = []  #1d array, thus lowercase
-i = 1
-for class_name in ["0", "3", "5", "7", "10", "14", "17", "21", "24", "28", "31"]:
-    label = int(class_name)  
-
-    folder = os.path.join("data", class_name)
-    for file in os.listdir(folder):
-        if file.startswith('.'):
-            continue
-
-        path = os.path.join(folder, file)
-        
-        print(i, ":", path)
-        i += 1
-        
-        features = extract_lab_features(path)
-
-        X.append(features)
-        y.append(label)
 
 
-X = np.array(X)
-y = np.array(y)
 
-print(X.shape)
-print(y.shape)
-print(X[:1])
-print(y[:10])
+rf = joblib.load("rf_peanut_maturity.joblib")
 
+features = extract_lab_features("images_before/peanuts1.jpeg") # Insert new image here
+prediction = rf.predict([features])
 
-np.save("XsubL.npy", X)
-np.save("ysubL.npy", y)
+print("Predicted maturity:", prediction[0], "Days till pick")
