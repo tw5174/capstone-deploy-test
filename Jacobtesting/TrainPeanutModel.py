@@ -8,8 +8,8 @@ from sklearn.model_selection import LeaveOneOut, cross_val_score
 from sklearn.model_selection import cross_val_predict
 import joblib
 
-X = np.load("XsubL.npy")
-y = np.load("ysubL.npy")
+X = np.load("XsubLsubMin.npy")
+y = np.load("ysubLsubMin.npy")
 
 # rf = RandomForestClassifier(
 #     n_estimators=200,
@@ -57,9 +57,9 @@ y_pred = cross_val_predict(rf, X, y, cv=loo)
 for t, p in zip(y[:42], y_pred[:42]):
     print(f"True: {t:>3}  Pred: {p:5.2f}")
 
-rf.fit(X, y)
+#rf.fit(X, y)
 
-joblib.dump(rf, "rf_peanut_maturity.joblib")
+#joblib.dump(rf, "rf_peanut_maturity.joblib")
 
 
 # rf = joblib.load("rf_peanut_maturity.joblib")

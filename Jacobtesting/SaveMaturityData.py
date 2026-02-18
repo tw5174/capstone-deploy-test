@@ -55,7 +55,7 @@ def extract_lab_features(image_path):
 
 # ---- 4. Combine masks into a single overlay ----
 # Set your size thresholds in pixels
-    min_size = 800   # reject anything smaller than this
+    min_size = 300   # reject anything smaller than this
     max_size = 5000  # reject anything larger than this
     min_circularity = 0.7 # 1 is a perfect circle, 0 is a line
 
@@ -147,5 +147,5 @@ print(X[:1])
 print(y[:10])
 
 
-np.save("XsubL.npy", X)
-np.save("ysubL.npy", y)
+np.save("XsubLsubMin.npy", X)
+np.save("ysubLsubMin.npy", y)

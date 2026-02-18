@@ -63,7 +63,7 @@ def process_image_and_predict(image_rgb, models):
     print(f"--- MASKS GENERATED: {len(masks)} found ---")
     
     # Thresholds (from original script)
-    min_size = 800
+    min_size = 300
     max_size = 5000
     min_circularity = 0.7
 
