@@ -11,7 +11,7 @@ sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
 sam.to("cpu")  # Use "cpu" if no GPU or "cuda" if nvidia gpu
 
 # ---- 2. Load your image ----
-image_path = "images_before/peanuts2.jpeg"
+image_path = "images_before/peanuts4.jpeg"
 image = cv2.imread(image_path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -57,25 +57,16 @@ for mask in masks:
     if keep_mask:
         overlay = np.maximum(overlay, mask['segmentation'].astype(np.uint8) * 255)
 
-
-############ NEW CODE FOR WHITE BACKGROUND ############
-
-# Create a white background
-white_background = np.ones_like(image) * 255
-
-# Create output where peanuts stay in color and background becomes white
-result = white_background.copy()
-result[overlay == 255] = image[overlay == 255]
-
-# Display result
+# ---- 5. Display the result ----
 plt.figure(figsize=(10, 10))
-plt.imshow(result)
+plt.imshow(image)
+plt.imshow(overlay, alpha=0.5, cmap='Reds')  # Highlights all detected objects
 plt.axis('off')
 plt.show()
 
-# Save image
-output_path = "peanuts_white_background.png"
-cv2.imwrite(output_path, cv2.cvtColor(result, cv2.COLOR_RGB2BGR))
-print(f"White-background peanut image saved to {output_path}")
-
-
+# ---- 6. Optional: Save overlay image ----
+output_path = "peanuts_highlighted.png"
+highlighted = image.copy()
+highlighted[overlay > 0] = [255, 0, 0]  # Highlight in red
+cv2.imwrite(output_path, cv2.cvtColor(highlighted, cv2.COLOR_RGB2BGR))
+print(f"Highlighted image saved to {output_path}")
