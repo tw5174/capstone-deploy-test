@@ -9,7 +9,8 @@ from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
 # --- CONFIGURATION ---
 #SAM_CHECKPOINT_PATH = "sam_vit_h_4b8939.pth"
 SAM_CHECKPOINT_PATH = "sam_vit_b_01ec64.pth"
-RF_MODEL_PATH = "rf_peanut_maturity.joblib"
+#RF_MODEL_PATH = "rf_peanut_maturity.joblib"
+RF_MODEL_PATH = "Jacobtesting/rf_peanut_maturity.joblib"
 #MODEL_TYPE = "vit_h"
 MODEL_TYPE = "vit_b"
 
