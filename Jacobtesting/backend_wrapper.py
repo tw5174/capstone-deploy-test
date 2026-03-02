@@ -7,9 +7,11 @@ import streamlit as st
 from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
 
 # --- CONFIGURATION ---
-SAM_CHECKPOINT_PATH = "sam_vit_h_4b8939.pth"
+#SAM_CHECKPOINT_PATH = "sam_vit_h_4b8939.pth"
+SAM_CHECKPOINT_PATH = "sam_vit_b_01ec64.pth"
 RF_MODEL_PATH = "rf_peanut_maturity.joblib"
-MODEL_TYPE = "vit_h"
+#MODEL_TYPE = "vit_h"
+MODEL_TYPE = "vit_b"
 
 @st.cache_resource
 def load_models():
@@ -17,9 +19,15 @@ def load_models():
     Loads the SAM model and Random Forest model.
     Returns: (sam_model, rf_model) or (None, None) if failed.
     """
+   # if not os.path.exists(SAM_CHECKPOINT_PATH):
+   #     return None, "missing_sam"
     if not os.path.exists(SAM_CHECKPOINT_PATH):
-        return None, "missing_sam"
-
+        import urllib.request
+        with st.spinner("Downloading SAM model (first time only, ~375MB)..."):
+            urllib.request.urlretrieve(
+                "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth",
+                SAM_CHECKPOINT_PATH
+            )
     if not os.path.exists(RF_MODEL_PATH):
         return None, "missing_rf"
 
