@@ -1,6 +1,6 @@
 torch
 torchvision
-opencv-python
+opencv-python-headless
 pycocotools
 onnx
 onnxruntime
@@ -10,3 +10,4 @@ segment-anything
 numpy
 Pillow
 scikit-learn
+
