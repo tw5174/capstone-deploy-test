@@ -180,7 +180,8 @@ with col_left:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         image_bgr = cv2.imdecode(file_bytes, 1)
         image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-        
+#st.write is just there to check image size for debugging 
+        st.write("Image shape (height, width, channels):", image_rgb.shape)
         st.image(image_rgb, use_container_width=True, caption="Sample Preview")
         
         # Color Distribution Card
