@@ -45,12 +45,12 @@ def load_models():
 
 
 @st.cache_resource
-def get_mask_generator(sam_model):
+def get_mask_generator(_sam_model):
     """
     Creates a cached mask generator with reduced memory usage.
     """
     return SamAutomaticMaskGenerator(
-        model=sam_model,
+        model=_sam_model,
         points_per_side=16,          # Lower to reduce RAM usage
         pred_iou_thresh=0.88,
         stability_score_thresh=0.95,
