@@ -1,4 +1,4 @@
-
+print("BACKEND FILE LOADED")
 import cv2
 import numpy as np
 import joblib
@@ -34,9 +34,12 @@ def load_models():
 
     try:
         # Load SAM
+        print("LOADING SAM MODEL...")
         sam = sam_model_registry[MODEL_TYPE](checkpoint=SAM_CHECKPOINT_PATH)
+        print("SAM MODEL CREATED")
         # Force CPU and float32 to avoid loose types causing interpolate errors on windows/cpu
         sam.to(device="cpu")
+        print("SAM MOVED TO CPU")
         
         # Load Random Forest
         rf = joblib.load(RF_MODEL_PATH)
@@ -66,16 +69,10 @@ def process_image_and_predict(image_rgb, models):
     sam_model, rf_model = models
     mask_generator = get_mask_generator(sam_model)
 
-  #  print("--- STARTING MASK GENERATION ---")
+    print("--- STARTING MASK GENERATION ---")
     # Generate Masks
- #   masks = mask_generator.generate(image_rgb)
- #   print(f"--- MASKS GENERATED: {len(masks)} found ---")
-    print("--- BEFORE MASK GENERATION ---")
-    try:
-        masks = mask_generator.generate(image_rgb)
-        print(f"--- AFTER MASK GENERATION: {len(masks)} masks generated ---")
-    except Exception as e:
-        print(f"--- SAM ERROR: {e} ---")
+    masks = mask_generator.generate(image_rgb)
+    print(f"--- MASKS GENERATED: {len(masks)} found ---")
     masks = []
     
     # Thresholds (from original script)
