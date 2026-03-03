@@ -69,7 +69,7 @@ def process_image_and_predict(image_rgb, models):
     # Generate Masks
     masks = mask_generator.generate(image_rgb)
     print(f"--- MASKS GENERATED: {len(masks)} found ---")
-    masks = []
+   # masks = []
     
     # Thresholds (from original script)
     min_size = 300
