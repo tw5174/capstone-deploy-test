@@ -1,8 +1,5 @@
 import psutil
-mem = psutil.virtual_memory()
-st.sidebar.write(f"Memory used: {mem.used / 1e9:.2f} GB")
-st.sidebar.write(f"Memory available: {mem.available / 1e9:.2f} GB")
-st.sidebar.write(f"Memory total: {mem.total / 1e9:.2f} GB")
+
 
 
 import streamlit as st
@@ -10,7 +7,10 @@ import cv2
 import numpy as np
 import backend_wrapper as backend
 import base64
-
+mem = psutil.virtual_memory()
+st.sidebar.write(f"Memory used: {mem.used / 1e9:.2f} GB")
+st.sidebar.write(f"Memory available: {mem.available / 1e9:.2f} GB")
+st.sidebar.write(f"Memory total: {mem.total / 1e9:.2f} GB")
 # --- 1. CONFIG & CSS ---
 st.set_page_config(
     page_title="PeanutAnalyzer",
