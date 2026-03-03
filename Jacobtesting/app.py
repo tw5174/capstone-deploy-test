@@ -215,7 +215,7 @@ with col_right:
                     overlay, days, count = backend.process_image_and_predict(image_rgb, models)
                 except Exception as e:
                     st.error(f"Error during processing: {e}")
-                     overlay, days, count = np.zeros_like(image_rgb[:,:,0]), None, 0
+                    overlay, days, count = np.zeros_like(image_rgb[:,:,0]), None, 0
                 if count > 0:
                     # Calculate a "Maturity Score" just for the UI visualization 
                     # (Assuming ~0 days remaining is 100%, and ~20 days is 0%)
