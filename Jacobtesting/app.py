@@ -180,8 +180,7 @@ with col_left:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         image_bgr = cv2.imdecode(file_bytes, 1)
         image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-#st.write is just there to check image size for debugging 
-        st.write("Image shape (height, width, channels):", image_rgb.shape)
+        
         st.image(image_rgb, use_container_width=True, caption="Sample Preview")
         
         # Color Distribution Card
@@ -211,8 +210,12 @@ with col_right:
     else:
         if st.button("Start Analysis"):
             with st.spinner("Analyzing pod structure and coloration..."):
-                overlay, days, count = backend.process_image_and_predict(image_rgb, models)
-                
+                #overlay, days, count = backend.process_image_and_predict(image_rgb, models) all the way down to if
+                try:
+                    overlay, days, count = backend.process_image_and_predict(image_rgb, models)
+                except Exception as e:
+                    st.error(f"Error during processing: {e}")
+                     overlay, days, count = np.zeros_like(image_rgb[:,:,0]), None, 0
                 if count > 0:
                     # Calculate a "Maturity Score" just for the UI visualization 
                     # (Assuming ~0 days remaining is 100%, and ~20 days is 0%)
