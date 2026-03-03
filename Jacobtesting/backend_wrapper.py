@@ -29,7 +29,6 @@ def load_models():
                 "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth",
                 SAM_CHECKPOINT_PATH
             )
-    st.write(f"SAM file size: {os.path.getsize(SAM_CHECKPOINT_PATH) / 1e6:.1f} MB")
     if not os.path.exists(RF_MODEL_PATH):
         return None, "missing_rf"
 
