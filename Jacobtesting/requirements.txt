@@ -10,5 +10,5 @@ segment-anything
 numpy
 Pillow
 scikit-learn
-psutil
+
 
