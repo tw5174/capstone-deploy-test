@@ -1,3 +1,9 @@
+import psutil
+mem = psutil.virtual_memory()
+st.sidebar.write(f"Memory used: {mem.used / 1e9:.2f} GB")
+st.sidebar.write(f"Memory available: {mem.available / 1e9:.2f} GB")
+st.sidebar.write(f"Memory total: {mem.total / 1e9:.2f} GB")
+
 
 import streamlit as st
 import cv2
