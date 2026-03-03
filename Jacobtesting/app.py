@@ -145,16 +145,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# --- 3. LOGIC LOADING ---
-if 'models_loaded' not in st.session_state:
-    st.session_state.models_loaded = False
-
+# --- 3. LOGIC LOADING (Updated for Safe SAM) ---
 with st.spinner("Initializing System..."):
     models, error = backend.load_models()
-    
+
 if error:
     st.error(f"System Error: {error}")
     st.stop()
+else:
+    st.success("Models loaded successfully ✅")
 
 
 # --- 4. MAIN LAYOUT ---
